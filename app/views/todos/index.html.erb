@@ -1,0 +1,28 @@
+<!-- app/views/todos/index.html.erb -->
+<div class="container mx-auto max-w-lg p-4">
+  <h1 class="text-2xl font-bold mb-4 text-center">My Academy Quest</h1>
+
+  <%= form_with(model: Todo.new, url: todos_path, local: true, class: "flex mb-4") do |form| %>
+    <%= form.text_field :title, placeholder: "Add new task...",
+      class: "flex-grow border rounded-l p-2" %>
+    <%= form.submit "Add", class: "bg-blue-600 text-white px-4 rounded-r" %>
+  <% end %>
+
+  <ul class="space-y-2">
+    <% @todos.each do |todo| %>
+      <li class="flex items-center justify-between border p-2 rounded <%= 'line-through text-gray-500' if todo.completed %>">
+        <span><%= todo.title %></span>
+        <div class="flex space-x-2">
+          <%= link_to "✔", todo_path(todo), method: :put,
+                class: "px-2 py-1 bg-green-500 text-white rounded" %>
+          <%= link_to "🗑", todo_path(todo), method: :delete,
+                class: "px-2 py-1 bg-red-500 text-white rounded" %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="mt-6 text-center">
+    <%= link_to "📄 My Brag Document", brag_path, class: "text-blue-600 underline" %>
+  </div>
+</div>
