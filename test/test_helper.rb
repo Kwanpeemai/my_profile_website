@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "simplecov"
 
 module ActiveSupport
   class TestCase
@@ -13,3 +14,14 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+
+SimpleCov.start "rails" do
+  add_filter "/test/"       # ไม่เอาไฟล์ test
+  add_filter "/config/"     # ไม่เอาไฟล์ config
+  coverage_dir "coverage"   # ตั้งชื่อโฟลเดอร์ coverage
+end
+
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
+require "rails/test_help"

@@ -1,4 +1,3 @@
-# app/controllers/todos_controller.rb
 class TodosController < ApplicationController
   before_action :set_todo, only: [ :update, :destroy ]
 
@@ -17,11 +16,14 @@ class TodosController < ApplicationController
   end
 
   def update
-    @todo.update(completed: !@todo.completed)
+    @todo = Todo.find(params[:id])
+    @todo.status = @todo.doing? ? "done" : "doing"
+    @todo.save!
     redirect_to todos_path
   end
 
   def destroy
+    @todo = Todo.find(params[:id])
     @todo.destroy
     redirect_to todos_path
   end
@@ -33,6 +35,6 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title)
+    params.require(:todo).permit(:title)  # ถ้าอยาก permit ๆ status เพิ่ม :status ได้
   end
 end
