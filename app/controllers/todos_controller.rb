@@ -1,6 +1,6 @@
 # app/controllers/todos_controller.rb
 class TodosController < ApplicationController
-  before_action :set_todo, only: [:update, :destroy]
+  before_action :set_todo, only: [ :update, :destroy ]
 
   def index
     @todos = Todo.order(created_at: :desc)
