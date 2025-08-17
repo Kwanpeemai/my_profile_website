@@ -1,7 +1,66 @@
-<!-- app/views/brag/show.html.erb -->
-<div class="container mx-auto max-w-lg p-4">
-  <h1 class="text-2xl font-bold mb-4">Natty 2025</h1>
-  <p class="text-gray-600 mb-2">Read a selection of opinion pieces from world-class journalists.</p>
-  <p class="mb-4">Writing effectively is an art...</p>
-  <%= link_to "⬅ Back", todos_path, class: "text-blue-600 underline" %>
+<div class="bg-gray-50 min-h-screen px-4 sm:px-6 md:px-8 py-12">
+  <div class="max-w-3xl mx-auto space-y-12">
+
+    <!-- Header -->
+    <div class="flex justify-end mb-8">
+      <%= link_to root_path, class: "text-2xl" do %>🏠<% end %>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-white rounded-xl p-6 sm:p-8 md:p-12 shadow-md flex flex-col md:flex-row items-center gap-6">
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">PEEMAI 2025</h1>
+        <p class="text-gray-600 text-sm sm:text-base md:text-lg">My personal roadmap and goals for skills, health, and teamwork.</p>
+      </div>
+      <div class="flex-shrink-0 w-32 sm:w-40 md:w-48 lg:w-56 mt-4 md:mt-0 rounded-lg overflow-hidden shadow-md">
+        <%= image_tag "me.JPG", class: "w-full h-full object-cover" %>
+      </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section class="space-y-4">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900">🎯 GOALS</h2>
+      <ul class="list-disc list-inside space-y-1 text-gray-700 leading-relaxed text-sm sm:text-base md:text-lg">
+        <li>เพิ่มทักษะเกี่ยวกับ programming languages</li>
+        <li>Frontend Skills: React, JavaScript, Angular, CSS, Bootstrap</li>
+        <li>Backend Skills: JAVA, Golang, TypeScript</li>
+        <li>Ruby on Rails 🌟</li>
+        <li>CI/CD, Pipeline ; DevOps</li>
+        <li>Good in English (TOEIC 550+, write, read)</li>
+        <li>Strong communication and interpersonal skills</li>
+        <li>Healthy and Exercise</li>
+      </ul>
+    </section>
+
+    <!-- Actions Section -->
+    <section class="space-y-6">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900">📝 ACTIONS</h2>
+
+      <div class="space-y-3">
+        <h3 class="text-xl sm:text-2xl font-medium text-gray-800">Self 🙋🏻‍♀️</h3>
+        <ul class="list-disc list-inside space-y-1 text-gray-700 leading-relaxed text-sm sm:text-base md:text-lg">
+          <li>ฝึก และเรียนภาษาอังกฤษเพิ่มวันละ 1-2 ชั่วโมง และนำไปสอบ</li>
+          <li>ทบทวนการใช้ CSS ในเว็บ W3School อย่างน้อยวันละ 5 หัวข้อ จนครบและคล่อง</li>
+          <li>ออกกำลังกายวันละ 30 นาที</li>
+          <li>ศึกษาในด้าน DevOps ให้เชี่ยวชาญ</li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-xl sm:text-2xl font-medium text-gray-800">Team ☕️</h3>
+        <ul class="list-disc list-inside space-y-1 text-gray-700 leading-relaxed text-sm sm:text-base md:text-lg">
+          <li>ช่วยพากันฝึกสหกิจให้จบ ให้รอดจนครบ 6 เดือน</li>
+          <li>ช่วยกันสอน code ที่ได้เรียนรู้มา</li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-xl sm:text-2xl font-medium text-gray-800">ODT 🪼</h3>
+        <ul class="list-disc list-inside space-y-1 text-gray-700 leading-relaxed text-sm sm:text-base md:text-lg">
+          <li>ตั้งใจทำทุก Quest ที่ได้รับมอบหมาย เพื่อเข้าไปเป็นส่วนหนึ่งของ ODT และเติบโตไปพร้อม ๆ กัน</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
 </div>

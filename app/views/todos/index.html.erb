@@ -1,67 +1,92 @@
-<div class="max-w-lg mx-auto p-8">
-  <!-- Brag Document link -->
-  <div class="mb-6 text-right">
-    <%= link_to "📄 My Brag Document", brag_path, class: "text-blue-600 hover:underline font-medium" %>
+<!-- Flash messages -->
+<% flash.each do |key, message| %>
+  <div class="mb-6 p-4 rounded-lg text-white
+              <%= key == 'notice' ? 'bg-green-500' : 'bg-red-500' %>">
+    <%= message %>
   </div>
+<% end %>
 
+<div class="max-w-3xl mx-auto px-6 py-12">
   <!-- Page title -->
-  <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">My Academy Quest</h1>
-
+  <h1 class="text-3xl sm:text-4xl font-extrabold mb-8 text-center text-gray-900">
+    🚀 My Academy Quest
+  </h1>
+  <!-- Avatar (optional, subtle) -->
+  <div class="flex justify-center mb-8">
+    <%= image_tag "me.JPG",
+        class: "w-32 h-32 sm:w-36 sm:h-36 rounded-full border-2 border-gray-200 shadow-sm object-cover" %>
+  </div>
+  <!-- Brag Document button -->
+  <div class="flex justify-center mb-10">
+    <%= link_to brag_path,
+        class: "bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-lg shadow-sm transition transform hover:scale-105 flex items-center gap-2" do %>
+      <span class="text-xl">📄</span>
+      <span class="text-base sm:text-lg">My Brag Document</span>
+    <% end %>
+  </div>
+  <!-- Progress bar -->
+  <% total = @todos.count %>
+  <% done = @todos.done.count %>
+  <% percent = total > 0 ? ((done.to_f / total) * 100).round : 0 %>
+  <div class="mb-10">
+    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+      <div class="bg-blue-500 h-4 rounded-full transition-all duration-700" style="width: <%= percent %>%"></div>
+    </div>
+    <p class="mt-2 text-sm text-center text-gray-500">
+      <%= percent %>% completed (<%= done %> of <%= total %>)
+    </p>
+  </div>
   <!-- Add Task Form -->
-  <%= form_with(model: Todo.new, url: todos_path, local: true, class: "flex mb-8 gap-2") do |form| %>
-    <%= form.text_field :title, placeholder: "Add a new task...",
-        class: "flex-grow border-gray-300 rounded p-2 text-gray-700 focus:border-blue-400 focus:ring-1 focus:ring-blue-200 outline-none" %>
-    <%= form.submit "+", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded transition" %>
+  <%= form_with(model: Todo.new, url: todos_path, local: true, class: "flex mb-10 gap-3") do |form| %>
+    <%= form.text_field :title,
+        placeholder: "Add a new task...",
+        class: "flex-grow border border-gray-300 rounded-lg p-3 text-gray-800 text-base
+                focus:border-blue-400 focus:ring-1 focus:ring-blue-200 outline-none shadow-sm" %>
+    <%= form.submit "+",
+        class: "bg-blue-500 hover:bg-blue-600 text-white font-bold 
+                w-12 h-12 rounded-full flex items-center justify-center text-xl 
+                transition-transform transform hover:scale-105 shadow-sm" %>
   <% end %>
-
   <!-- Doing tasks -->
-  <h2 class="text-lg text-gray-700 font-semibold mb-2">
-    Tasks to do (<%= @todos.doing.count %>)
+  <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+    📋 Tasks to do (<%= @todos.doing.count %>)
   </h2>
-  <ul class="mb-8">
+  <ul class="mb-10 space-y-3">
     <% @todos.doing.each do |todo| %>
-      <li class="flex items-center justify-between py-2 px-1 border-b border-gray-100 last:border-b-0">
-        <span class="text-gray-800"><%= todo.title %></span>
-        <div class="flex items-center gap-2">
+      <li class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition transform hover:-translate-y-0.5">
+        <span class="text-gray-800 text-base break-words"><%= todo.title %></span>
+        <div class="flex items-center gap-3">
           <%= link_to "✔", todo_path(todo), method: :patch,
-              class: "text-blue-500 hover:text-blue-700 text-lg font-bold px-2 rounded focus:ring-2 focus:ring-blue-200",
+              class: "text-green-500 hover:text-green-600 text-lg font-semibold px-2 rounded transition-transform transform hover:scale-110 focus:ring-1 focus:ring-green-200",
               title: "Mark as done",
               data: { "turbo-method": "patch" } %>
           <%= link_to "🗑", todo_path(todo), method: :delete,
-              class: "text-red-400 hover:text-red-600 text-lg font-bold px-2 rounded focus:ring-2 focus:ring-red-200",
+              class: "text-red-400 hover:text-red-500 text-lg font-semibold px-2 rounded transition-transform transform hover:scale-110 focus:ring-1 focus:ring-red-200",
               data: { turbo_method: :delete, confirm: "Delete this task?" },
               title: "Delete" %>
         </div>
       </li>
     <% end %>
     <% if @todos.doing.count == 0 %>
-      <li class="text-gray-400 italic text-center py-4">You have no tasks left!</li>
+      <li class="text-gray-400 italic text-center py-6 text-base">🎉 All tasks are done!</li>
     <% end %>
   </ul>
-
   <!-- Done tasks -->
-  <h2 class="text-lg text-gray-600 font-semibold mb-2">
-    Done (<%= @todos.done.count %>)
+  <h2 class="text-xl font-semibold text-gray-700 mb-4 flex items-center gap-2">
+    ✅ Done (<%= @todos.done.count %>)
   </h2>
-  <ul>
+  <ul class="space-y-3">
     <% @todos.done.each do |todo| %>
-      <li class="py-2 px-1 text-gray-400 line-through flex items-center justify-between">
-        <span><%= todo.title %></span>
-        <div class="flex items-center gap-2">
-          <!-- ถ้าอยากให้ undo ได้ ให้ปลดคอมเมนต์บรรทัดด้านล่าง -->
-          <%#= link_to "↩", todo_path(todo), method: :patch,
-                  class: "text-green-400 hover:text-green-600 text-lg font-bold px-2 rounded",
-                  title: "Mark as not done",
-                  data: { "turbo-method": "patch" } %>
-          <%= link_to "🗑", todo_path(todo), method: :delete,
-              class: "text-red-400 hover:text-red-600 text-lg font-bold px-2 rounded focus:ring-2 focus:ring-red-200",
-              data: { confirm: "Delete this task?" },
-              title: "Delete" %>
-        </div>
+      <li class="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-500 shadow-sm">
+        <span class="line-through text-base"><%= todo.title %></span>
+        <%= link_to "🗑", todo_path(todo), method: :delete,
+            class: "text-red-400 hover:text-red-500 text-lg font-semibold px-2 rounded transition-transform transform hover:scale-110 focus:ring-1 focus:ring-red-200",
+            data: { turbo_method: :delete, confirm: "Delete this task?" },
+            title: "Delete" %>
       </li>
     <% end %>
     <% if @todos.done.count == 0 %>
-      <li class="text-gray-300 italic text-center py-4">No tasks completed yet</li>
+      <li class="text-gray-400 italic text-center py-6 text-base">💤 No tasks completed yet</li>
     <% end %>
   </ul>
 </div>
