@@ -1,0 +1,14 @@
+<h2 class="text-xl font-semibold <%= done ? 'text-gray-700' : 'text-gray-800' %> mb-4 flex items-center gap-2">
+  <%= title %> (<%= todos.count %>)
+</h2>
+<ul class="mb-10 space-y-3">
+  <% todos.each do |todo| %>
+    <%= render "todo_item", todo: todo, done: done %>
+  <% end %>
+
+  <% if todos.empty? %>
+    <li class="text-gray-400 italic text-center py-6 text-base">
+      <%= done ? "💤 No tasks completed yet" : "🎉 All tasks are done!" %>
+    </li>
+  <% end %>
+</ul>

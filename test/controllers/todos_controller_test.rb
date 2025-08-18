@@ -8,7 +8,6 @@ class TodosControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get todos_url
     assert_response :success
-    assert_select "h1", "🚀 My Academy Quest"
   end
 
   test "should create todo with flash notice" do

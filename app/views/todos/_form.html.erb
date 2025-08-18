@@ -1,0 +1,10 @@
+<%= form_with(model: todo, url: todos_path, local: true, class: "flex mb-10 gap-3") do |form| %>
+  <%= form.text_field :title,
+      placeholder: "Add a new task...",
+      class: "flex-grow border border-gray-300 rounded-lg p-3 text-gray-800 text-base
+              focus:border-blue-400 focus:ring-1 focus:ring-blue-200 outline-none shadow-sm" %>
+  <%= form.submit "+",
+      class: "bg-blue-500 hover:bg-blue-600 text-white font-bold 
+              w-12 h-12 rounded-full flex items-center justify-center text-xl 
+              transition-transform transform hover:scale-105 shadow-sm" %>
+<% end %>

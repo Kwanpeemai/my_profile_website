@@ -1,0 +1,36 @@
+<%# ย้ายรายการไปยังลิสต์ปลายทาง และลบจากลิสต์ต้นทาง %>
+<% if @todo.completed %>
+  <%= turbo_stream.append "done_list",
+        partial: "todo_item",
+        locals: { todo: @todo, done: true } %>
+  <%= turbo_stream.remove dom_id(@todo) %>
+<% else %>
+  <%= turbo_stream.append "todo_list",
+        partial: "todo_item",
+        locals: { todo: @todo, done: false } %>
+  <%= turbo_stream.remove dom_id(@todo) %>
+<% end %>
+
+<%# อัปเดตตัวเลขหัวข้อ %>
+<%= turbo_stream.update "todo_count",  Todo.where(completed: false).count %>
+<%= turbo_stream.update "done_count",  Todo.where(completed: true).count  %>
+
+<%# จัดการข้อความว่างของแต่ละลิสต์ %>
+<% if Todo.where(completed: false).exists? %>
+  <%= turbo_stream.remove "todo_empty_msg" %>
+<% else %>
+  <%= turbo_stream.append "todo_list",
+        %(<li id="todo_empty_msg" class="text-gray-400 italic text-center py-6 text-base">🎉 All tasks are done!</li>).html_safe %>
+<% end %>
+
+<% if Todo.where(completed: true).exists? %>
+  <%= turbo_stream.remove "done_empty_msg" %>
+<% else %>
+  <%= turbo_stream.append "done_list",
+        %(<li id="done_empty_msg" class="text-gray-400 italic text-center py-6 text-base">💤 No tasks completed yet</li>).html_safe %>
+<% end %>
+
+
+<%= turbo_stream.replace "progress_bar",
+      partial: "progress_bar",
+      locals: { total: Todo.count, done: Todo.where(completed: true).count } %>

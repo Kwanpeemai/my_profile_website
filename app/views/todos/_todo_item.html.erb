@@ -1,0 +1,23 @@
+<li class="flex items-center justify-between p-4 
+           <%= todo.status ? 'bg-gray-50 text-gray-500' : 'bg-white text-gray-800' %>
+           border border-gray-200 rounded-lg shadow-sm
+           <%= todo.status ? '' : 'hover:shadow-md transition transform hover:-translate-y-0.5' %>">
+  
+  <span class="<%= todo.status ? 'line-through text-base' : 'text-base break-words' %>">
+    <%= todo.title %>
+  </span>
+
+  <div class="flex items-center gap-3">
+    <%# Checkbox toggle %>
+    <%= form_with url: toggle_todo_path(todo), method: :post, local: true do %>
+      <%= check_box_tag "status", "0", todo.status,
+            onchange: "this.form.submit()",
+            class: "w-5 h-5 text-green-500 rounded focus:ring-2 focus:ring-green-300" %>
+    <% end %>
+
+    <%= link_to "🗑", todo_path(todo), method: :delete,
+        class: "text-red-400 hover:text-red-500 text-lg font-semibold px-2 rounded transition-transform transform hover:scale-110 focus:ring-1 focus:ring-red-200",
+        data: { turbo_method: :delete, confirm: "Delete this task?" },
+        title: "Delete" %>
+  </div>
+</li>

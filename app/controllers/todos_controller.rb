@@ -9,9 +9,6 @@ class TodosController < ApplicationController
     @todo = Todo.new(todo_params)
     if @todo.save
       redirect_to todos_path, notice: "Task added!"
-    else
-      @todos = Todo.order(created_at: :desc)
-      render :index
     end
   end
 
@@ -28,6 +25,12 @@ class TodosController < ApplicationController
     redirect_to todos_path
   end
 
+  def toggle
+    @todo = Todo.find(params[:id])
+    @todo.update(completed: !@todo.completed)
+    redirect_back fallback_location: todos_path
+  end
+
   private
 
   def set_todo
@@ -35,6 +38,6 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title)  # ถ้าอยาก permit ๆ status เพิ่ม :status ได้
+    params.require(:todo).permit(:title)
   end
 end
